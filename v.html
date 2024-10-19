@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Punto de Venta (POS)</title>
+</head>
+
+<body>
+    <template id="pos-component">
+        <div class="navbar">
+            <ul class="menu">
+                <li><a href="index.html">LEXA</a></li>
+                <li><a href="#">Ventas</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Contacto</a></li>
+                <li class="slider"></li>
+            </ul>
+            <div class="profile">
+                <img src="profile-icon.png" alt="Perfil" />
+                <span>Nombre Cajero</span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="left-panel">
+                <input type="text" class="input-barcode" placeholder="Ingrese código de barras" />
+                <button class="ov-btn-grow-ellipse">Activar Lector de Código de Barras</button>
+                <table class="product-list">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody class="product-items">
+                        <!-- Productos agregados aquí -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="right-panel">
+                <div class="summary">
+                    <h3>Resumen de la venta</h3>
+                    <p>Subtotal: <span class="subtotal">$0.00</span></p>
+                    <p>Impuestos (10%): <span class="tax">$0.00</span></p>
+                    <h2>Total: <span class="total">$0.00</span></h2>
+                </div>
+                <button class="ov-btn-grow-ellipse">Realizar Venta</button>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        class PosComponent extends HTMLElement {
+            constructor() {
+                super();
+                const template = document.getElementById('pos-component').content;
+                const shadowRoot = this.attachShadow({ mode: 'open' });
+                shadowRoot.appendChild(template.cloneNode(true));
+
+                fetch('st.css')
+                    .then(response => response.text())
+                    .then(css => {
+                        const style = document.createElement('style');
+                        style.textContent = css;
+                        shadowRoot.appendChild(style);
+                    });
+
+                this.products = {
+                    "123": { name: "Producto 1", price: 10.00 },
+                    "456": { name: "Producto 2", price: 20.00 },
+                    "789": { name: "Producto 3", price: 15.00 }
+                };
+
+                this.cart = [];
+
+                this.init();
+            }
+
+            init() {
+                const inputBarcode = this.shadowRoot.querySelector('.input-barcode');
+                const productTable = this.shadowRoot.querySelector('.product-items');
+                const subtotalElement = this.shadowRoot.querySelector('.subtotal');
+                const taxElement = this.shadowRoot.querySelector('.tax');
+                const totalElement = this.shadowRoot.querySelector('.total');
+
+                inputBarcode.addEventListener('keypress', (event) => {
+                    if (event.key === 'Enter') {
+                        const code = inputBarcode.value.trim();
+                        if (this.products[code]) {
+                            this.addProductToCart(code);
+                            inputBarcode.value = '';
+                            this.updateCartDisplay(productTable, subtotalElement, taxElement, totalElement);
+                        } else {
+                            alert("Producto no encontrado.");
+                        }
+                    }
+                });
+            }
+
+            addProductToCart(code) {
+                const existingProduct = this.cart.find(item => item.code === code);
+                if (existingProduct) {
+                    existingProduct.quantity += 1;
+                } else {
+                    const product = this.products[code];
+                    this.cart.push({ ...product, code, quantity: 1 });
+                }
+            }
+
+            updateCartDisplay(productTable, subtotalElement, taxElement, totalElement) {
+                productTable.innerHTML = ''; // Limpiar productos previos
+                let subtotal = 0;
+
+                this.cart.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td>${item.quantity}</td>
+                        <td>$${(item.price * item.quantity).toFixed(2)}</td>
+                    `;
+                    productTable.appendChild(row);
+                    subtotal += item.price * item.quantity;
+                });
+
+                const tax = subtotal * 0.10;
+                const total = subtotal + tax;
+
+                subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+                taxElement.textContent = `$${tax.toFixed(2)}`;
+                totalElement.textContent = `$${total.toFixed(2)}`;
+            }
+        }
+
+        customElements.define('pos-component', PosComponent);
+    </script>
+
+    <pos-component></pos-component>
+</body>
+
+</html>

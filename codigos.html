@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Códigos de Barras</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <ul class="menu">
+        <li><a href="index.html" >LEXA</a></li>
+        <li><a href="v.html">Ventas</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Contact</a></li>
+        <li class="slider"></li>
+    </ul>
+
+    <div class="contenido">
+        <div class="barcode">
+            <svg id="barcode"></svg>
+        </div>
+
+        <div class="boton">
+            <button class="ov-btn-grow-ellipse" onclick="generateBarcode()">Generar Código de Barras</button>
+            <button class="ov-btn-grow-ellipse" onclick="printBarcode()">Imprimir Código de Barras</button>
+        </div>
+
+        <div id="printArea" class="print-area">
+            <svg id="printBarcode"></svg>
+        </div>
+    </div>
+
+    <script src="code.js"></script>
+</body>
+</html>
