@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Punto de Venta</title>
+    <link rel="stylesheet" href="usuariostyle.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <h1>Sistema de Punto de Venta</h1>
+        </div>
+    </header>
+
+    <section id="login" class="container">
+        <h2>Inicio de Sesión</h2>
+        <div class="form-control">
+            <label for="username">Usuario</label>
+            <input type="text" id="username" placeholder="Nombre de usuario">
+        </div>
+        <div class="form-control">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" placeholder="Contraseña">
+        </div>
+        <div class="form-control">
+            <button onclick="login()">Iniciar Sesión</button>
+        </div>
+    </section>
+
+    <section id="user-form" class="container" style="display:none;">
+        <h2>Agregar/Modificar Usuario</h2>
+        <div class="form-control">
+            <label for="new-username">Usuario</label>
+            <input type="text" id="new-username" placeholder="Nombre de usuario">
+        </div>
+        <div class="form-control">
+            <label for="new-password">Contraseña</label>
+            <input type="password" id="new-password" placeholder="Contraseña">
+        </div>
+        <div class="form-control">
+            <button onclick="addUser()">Agregar Usuario</button>
+        </div>
+    </section>
+
+    <section id="user-list" class="container" style="display:none;">
+        <h2>Lista de Usuarios</h2>
+        <ul id="users"></ul>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

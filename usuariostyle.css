@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+#main-header {
+    background-color: #333;
+    color: #fff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #77D94C 3px solid;
+}
+
+#main-header h1 {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 24px;
+}
+
+#login, #user-form, #user-list {
+    background: #fff;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 2px 3px #ccc;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.form-control label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.form-control button {
+    background: #333;
+    color: #fff;
+    border: 0;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#user-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+#user-list ul li {
+    background: #f4f4f4;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-left: #77D94C 5px solid;
+}
+
+.user-actions {
+    float: right;
+}
+
+.user-actions button {
+    margin-left: 5px;
+}
